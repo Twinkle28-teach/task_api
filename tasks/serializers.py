@@ -3,6 +3,7 @@ from .models import Task
 from datetime import date
 
 class TaskSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source="category.name", read_only=True,allow_null=True)
     class Meta:
         model = Task
         fields = "__all__"

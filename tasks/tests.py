@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from rest_framework.test import APITestCase
-from .models import Task
+from .models import Task, Category
 
 # Create your tests here.
 class TaskAPITests(APITestCase):
@@ -41,6 +41,12 @@ class TaskAPITests(APITestCase):
     def test_me_requires_login(self):
         response = self.client.get("/api/me/")
         self.assertEqual(response.status_code, 401)
+           
+    def test_list_query_count(self):
+        cat = Category.objects.create(name="Work")
+        Task.objects.update(category=cat)
+        with self.assertNumQueries(1):
+            self.client.get("/api/tasks/")
 
 
 
