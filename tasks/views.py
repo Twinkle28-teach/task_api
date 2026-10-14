@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all().order_by("-created_at")
+    queryset = Task.objects.select_related("category").order_by("-created_at")
     serializer_class = TaskSerializer
 
     def get_queryset(self):
